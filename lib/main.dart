@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:urlshortener/bloc/home_bloc/bloc/home_bloc.dart';
-import 'package:urlshortener/bloc/home_bloc/my_homepage.dart';
+import 'package:provider/provider.dart';
+import 'package:urlshortener/bloc/BMI/bmi_provider.dart';
+import 'package:urlshortener/bloc/BMI/bmi_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,13 +16,22 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Url Shortener',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: BlocProvider(
-        create: (context) => HomeBloc(),
-        child: const MyHomePageScreen(),
-      ),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+          appBarTheme: AppBarTheme(
+              titleTextStyle: TextStyle(
+                  fontSize: 22,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500))),
+      home: MultiProvider(providers: [
+        ChangeNotifierProvider(create: (context) => BmiProvider()),
+        // Provider<BmiProvider>(
+        //   create: (_) => BmiProvider(),
+        // ),
+      ], child: BmiScreen()),
+      // BlocProvider(
+      //   create: (context) => HomeBloc(),
+      //   child: const MyHomePageScreen(),
+      // ),
     );
   }
 }
